@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <!-- 1. Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- 2. Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+  <!-- 3. Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              cyan: '#00f0ff',
+              magenta: '#ff007f',
+              purple: '#332F52',
+              azul:'#565FA3',
+              white:'#fff',
+              fuchsia:'#FF09F0',
+              black:'#000'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+<body class="bg-slate-900  text-slate-100 font-sans antialiased min-h-screen flex">
+
+  <!-- SIDEBAR (Desktop) -->
+  <aside class="hidden lg:flex flex-col w-64 sm:flex flex-col bg-slate-800 backdrop-blur-xl border-r border-slate-800/80 p-6">
+    <div class="flex items-center gap-3 mb-8">
+      <div
+        class="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-600 to-fuchsia-500 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-cyan-500/60">
+        M
+      </div>
+      <span class="font-extrabold tracking-wider text-white">Moni<span class="text-brand-cyan">Store</span></span>
+    </div>
+
+    <nav class="space-y-1.5 flex-1 bg-slate-800 rounded-xl">
+
+
+      <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-cyan-500/10 text-slate-400 border border-cyan-500/20 hover:text-white hover:bg-slate-800/60 text-sm font-semibold" 
+        href="../../index.html">
+        <button type="button">
+          🏠 Home
+        </button>
+      </a>
+
+      <button onclick="document.getElementById('miModal').classList.remove('hidden')" 
+        class="flex items-center gap-3 px-4 py-3 w-full rounded-xl bg-cyan-500/10 text-slate-400 border border-cyan-500/20 hover:text-white hover:bg-slate-800/60 text-sm font-semibold">
+        📦 Inventario
+      </button>
+      
+
+      <a href="#"
+        class="static flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 bg-cyan-500/10 border border-cyan-500/20 hover:text-white hover:bg-slate-800/60 text-sm font-medium transition-colors justify-between">
+        📈 Ventas <td class="py-3.5"><span
+                    class="rounded-full text-[10px] font-bold text-emerald-300 animate-pulse text-sm">+50M</span>
+      </a>
+      <a href="#"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 bg-cyan-500/10 border border-cyan-500/20 hover:text-white hover:bg-slate-800/60 text-sm font-medium transition-colors justify-between">
+        👥 Usuarios <td class="py-3.5"><span
+                    class="rounded-full text-[10px] font-bold text-emerald-300 animate-pulse text-sm">+35</span>
+      </a>
+      <a href="#"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 bg-cyan-500/10 border border-cyan-500/20 hover:text-white hover:bg-slate-800/60 text-sm font-medium transition-colors justify-between">
+          📅  Calendario 
+                    <input class="text-xs w-4 grid grid-cols-1 bg-slate-800 h-8 rounded-lg" type="date">
+      </a>
+    </nav>
+  </aside>
+
+  <div class="flex-1 flex flex-col min-w-0">
+
+    <!-- TOPBAR -->
+    <header
+      class="p-2 h-18 px-6 backdrop-blur-md border-b border-slate-900/90 flex items-center justify-between sticky top-0 z-20">
+      <div class="flex items-center gap-3 lg:hidden">
+        <span class="font-black text-cyan-400 text-lg"></span>
+      </div>
+
+      <div class="hidden sm:flex items-center flex-1 max-w-md">
+        <input type="search" placeholder="Buscar productos ..."
+          class="w-full bg-black border border-slate-900 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+      </div>
+
+      <div class="flex items-center gap-5">
+        <div class="flex items-center gap-3 px-3 py-1.5 rounded-full bg-emerald-500/10 border-emerald-500/20">
+          <span class="w-4 h-4 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-[11px] font-bold text-emerald-400">ONLINE</span>
+        </div>
+        <img src="./img/logo-wasa-pajaro.webp"
+          class="w-10 h-10 rounded-full border aspect-4/3 object-cover border-cyan-900/90"> <!--rounded-full border : al quitarlo desaparece el circulo que rodea la imagen-->
+      </div>
+    </header>
+
+    <!-- DASHBOARD CONTENT -->
+    <main class="p-6 lg:p-8 space-y-8 flex-1 overflow-y-auto ">
+
+      <!-- GRID DE MÉTRICAS -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 cursor-pointer">
+        <div
+          class="bg-slate-800 hover:animate-pulse transition-discrete p-6 backdrop-blur-xl border border-slate-800/80 rounded-2xl hover:border-cyan-500/40 transition-all group">
+          <p class="text-xs font-semibold text-slate-400 uppercase">Ventas</p>
+          <h3 class="text-3xl font-black text-white mt-1 group-hover:text-slate-500 transition-colors">9.5M</h3>
+          <span class="text-xs text-emerald-400 font-bold mt-3 inline-block">+500% crecimiento</span>
+        </div>
+        <div
+          class="bg-slate-800 hover:animate-pulse p-6 bg-brand-azul backdrop-blur-xl border border-slate-800/80 rounded-2xl hover:border-cyan-500/40 transition-all group">
+          <p class="text-xs font-semibold text-slate-400 uppercase">Productos en proceso</p>
+          <h3 class="text-3xl font-black text-white mt-1 group-hover:text-slate-500 transition-colors">8500</h3>
+          <span class="text-xs text-emerald-400 font-bold mt-3 inline-block">100% operativo</span>
+        </div>
+        <div class="bg-slate-800 hover:animate-pulse p-6 bg-brand-azul backdrop-blur-xl border border-slate-800/80 rounded-2xl hover:border-cyan-500/40 transition-all group">
+          <p class="text-xs font-semibold text-slate-400 uppercase">Entrega estimada</p>
+          <h3 class="text-3xl font-black text-white mt-1 group-hover:text-slate-500 transition-colors">4 dias</h3>
+          <span class="text-xs text-emerald-400 font-bold mt-3 inline-block">Aproximadamente</span>
+        </div>
+        <div
+          class="bg-slate-800 hover:animate-pulse p-6 bg-brand-azul backdrop-blur-xl border border-slate-800/80 rounded-2xl hover:border-cyan-500/40 transition-all group">
+          <p class="text-xs font-semibold text-slate-400 uppercase">Disponibilidad</p>
+          <h3 class="text-3xl font-black text-white mt-1 group-hover:text-slate-500 transition-colors">95.9%</h3>
+          <span class="text-xs text-emerald-400 font-bold mt-3 inline-block">Productos</span>
+        </div>
+      </section>
+
+      <!-- TABLA DE ACTIVIDAD -->
+      <section class="bg-slate-900/70 border border-slate-700/80 rounded-2xl p-6">
+        <h3 class="text-base font-bold text-slate-300 mb-4">Gestión de productos</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-slate-800 text-gray-400 uppercase">
+                <th class="pb-3">Producto (Funda / ID)</th>
+                <th class="pb-3">Categoría</th>
+                <th class="pb-3">Stock / Disponibilidad</th>
+                <th class="pb-3">Estado</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-700/60">
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#CL-901 </td>
+                <td class="py-3.5 text-gray-500">Plastico</td>
+                <td class="py-3.5 text-emerald-500">30</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400">Disponible</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#CL-408 </td>
+                <td class="py-3.5 text-gray-500">Goma</td>
+                <td class="py-3.5 text-yellow-500">17</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400">Por
+                    agotar</span></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#CL-412 </td>
+                <td class="py-3.5 text-gray-500">Cuero</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#CL-912 </td>
+                <td class="py-3.5 text-gray-500">Plastico</td>
+                <td class="py-3.5 text-yellow-500">15</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400">Por Agotar</span>
+                </td>
+                <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#CL-900 </td>
+                <td class="py-3.5 text-gray-500">Plastico</td>
+                <td class="py-3.5 text-yellow-500">18</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400">Por Agotar</span>
+                </td>
+                <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#CL-404 </td>
+                <td class="py-3.5 text-gray-500">Goma</td>
+                <td class="py-3.5 text-emerald-500">23</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400">Disponible</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+<div id="miModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+<div class="bg-slate-800 rounded-xl shadow-lg w-3/4 h-3/4 p-6 relative">
+    <button onclick="document.getElementById('miModal').classList.add('hidden')" 
+            class="absolute top-2 right-3 text-white text-xl">
+    &times;
+    </button>
+    <h2 class="text-white text-lg font-semibold mb-2 px-2">Stock Disponible</h2>
+    <p class="text-slate-300 text-sm px-2">Lista en órden numerico</p>
+
+    <!-- TABLA DE ACTIVIDAD -->
+     <div class="max-h-64 mt-5 scrollbar-thumb-slate-700 scrollbar-track-slate-900/70 overflow-y-auto max-h-[24rem] rounded-lg">
+      <section class="bg-slate-900/70 border border-slate-700/80 rounded-2xl p-6 mt-6">
+        <h3 class="text-base font-bold text-slate-300 mb-4">Inventario Disponible</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-slate-800 text-gray-400 uppercase">
+                <th class="pb-3">Producto (Funda / ID)</th>
+                <th class="pb-3">Categoría</th>
+                <th class="pb-3">Stock / Disponibilidad</th>
+                <th class="pb-3">Estado</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-700/60">
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#101-transparente </td>
+                <td class="py-3.5 text-gray-500">Plastico</td>
+                <td class="py-3.5 text-green-500">38</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400">Disponible</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#102-abstracto </td>
+                <td class="py-3.5 text-gray-500">Goma</td>
+                <td class="py-3.5 text-yellow-500">18</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400">Por
+                    agotar</span></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#103-minimalista </td>
+                <td class="py-3.5 text-gray-500">Cuero</td>
+                <td class="py-3.5 text-yellow-500">11</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400">Por
+                    agotar</span></td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#104-transparente </td>
+                <td class="py-3.5 text-gray-500">Vidrio</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#105-Moderno </td>
+                <td class="py-3.5 text-gray-500">Hierro</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#106-Rudimentario </td>
+                <td class="py-3.5 text-gray-500">Madera</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#107-Elegante </td>
+                <td class="py-3.5 text-gray-500">Tela</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#108-Personalizado </td>
+                <td class="py-3.5 text-gray-500">Carbono</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#109-Resistente </td>
+                <td class="py-3.5 text-gray-500">Adamantium</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#110-Peligroso </td>
+                <td class="py-3.5 text-gray-500">Criptonita</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#111-Confiable </td>
+                <td class="py-3.5 text-gray-500">Plata</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#112-Debilidad de Metroman </td>
+                <td class="py-3.5 text-gray-500">Cobre</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#113-Enchapa'o </td>
+                <td class="py-3.5 text-gray-500">porcelana</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#114-Lacoste </td>
+                <td class="py-3.5 text-gray-500">Piel de lagarto</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="py-3.5 font-mono text-cyan-400 font-bold">#115-Cromado </td>
+                <td class="py-3.5 text-gray-500">Aluminio</td>
+                <td class="py-3.5 text-red-500">0</td>
+                <td class="py-3.5"><span
+                    class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400">Agotado</span>
+                </td>
+              </tr>
+
+              </div>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+</div>
+</div>
+
+
+
+</body>
+</html>
